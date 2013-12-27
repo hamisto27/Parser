@@ -13,8 +13,10 @@ the given grammar. The modification is the following:
 */
 public class Main{
 	public static void main(String args[])throws Exception{
+		
+		new Parser();
 		// Apply the lexical analyzer
-		Scanner cobolScanner = new Scanner(System.in);
+		/*Scanner cobolScanner = new Scanner(System.in);
 		Symbol lexicalUnit;
 		do{
 			lexicalUnit = cobolScanner.next_token();
@@ -35,7 +37,7 @@ public class Main{
 					if(symbol.containsKey(Symbol.IMAGE)) variables.add(symbol);
 					else labels.add(symbol);
 				}
-			}catch(ClassCastException cce){ cce.printStackTrace(); /* we just ignore remaining information from the table*/}
+			}catch(ClassCastException cce){ cce.printStackTrace(); }// we just ignore remaining information from the table
 		}
 		// we sort vars/labels
 		final Comparator<Symbol<String>> sorter = new Comparator<Symbol<String>>(){
@@ -52,6 +54,6 @@ public class Main{
 		System.out.println("labels");
 		for(Symbol<String> identifier:labels)
 			System.out.println(identifier.getValue()+"\t"+identifier.get(Symbol.LINE));
-			
+	*/		
 	}
 }
