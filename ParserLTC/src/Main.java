@@ -1,9 +1,3 @@
-import java.util.List;
-import java.util.Collections;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-
 /**
 This class show you how to use the Lexical Analyzer.
 For this second part, I choosed to accept a file that does not respect completly
@@ -14,7 +8,7 @@ the given grammar. The modification is the following:
 public class Main{
 	public static void main(String args[])throws Exception{
 		
-		Parser.getInstance().Start();
+		Parser.parse();
 		// Apply the lexical analyzer
 		/*Scanner cobolScanner = new Scanner(System.in);
 		Symbol lexicalUnit;
