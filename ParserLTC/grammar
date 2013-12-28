@@ -1,0 +1,83 @@
+[1] <PROGRAM>       → <IDENT> <ENV> <DATA> <PROC>
+[2] <IDENT>         → identification division <END_INST> program-id. ID<END_INST> author. <WORDS><END_INST> date-written. <WORDS><END_INST>
+[3] <WORDS>         → ID <WORDS_NOREC> 
+[4] <WORDS_NOREC>   → ID <WORDS_NOREC>
+[5]				    →  ε 
+[6] <END_INST>      → .\n
+[7] <ENV>           → environment division<END_INST> configuration section<END_INST> source-computer. <WORDS><END_INST> object-computer. <WORDS><END_INST>
+[8] <DATA>          → data division<END_INST>working-storage section<END_INST> <VAR_LIST>
+[9] <VAR_LIST>      → <VAR_DECL> <VAR_LIST>
+[10]                →   ε
+[11] <VAR_DECL>     →  <LEVEL> ID pic IMAGE<VAR_DECL_LF>
+[12] <VAR_DECL_LF>  →  value INTEGER<END_INST>     
+[13]                →  <END_INST>
+[14] <LEVEL>        → INTEGER
+[15] <PROC>         → procedure division<END_INST> ID section<END_INST> <LABELS> end program ID.
+[16] <LABELS>       → <LABEL><END_INST> <INSTRUCTION_LIST> <LABELS_NOREC> 
+[17] <LABELS_NOREC> → <LABEL><END_INST> <INSTRUCTION_LIST> <LABELS_NOREC>
+[18]                →  ε 
+[19] <LABEL>        → ID
+[20] <INSTRUCTION_LIST> → <INSTRUCTION> <INSTRUCTION_LIST>
+[21]                    →ε
+[22] <INSTRUCTION>  → <ASSIGNATION>
+[23]				→ <IF>
+[24]				→ <CALL>
+[25]				→ <READ>
+[26]				→ <WRITE>
+[27]				→ stop run<END_INST>
+[28] <ASSIGNATION>  → move <EXPRESSION> to ID<END_INST>
+[29]			    → compute ID = <EXPRESSION><END_INST>
+[30]			    → add <EXPRESSION> to ID<END_INST>
+[31]			    → subtract <EXPRESSION> from ID<END_INST>
+[32]			    → multiply <ASSING_END><END_INST>
+[33]			    → divide <ASSING_END><END_INST>
+[34] <ASSING_END>	→ <EXPRESSION>,<EXPRESSION> giving ID
+
+[35] <EXPRESSION>       →    <EXPRESSION_A> <EXPRESSION_NOREC> 
+[36] <EXPRESSION_NOREC> →    or <EXPRESSION_A> <EXPRESSION_NOREC>
+[37]                    →    ε  
+
+[38] <EXPRESSION_A>       →    <EXPRESSION_B> <EXPRESSION_A_NOREC> 
+[39] <EXPRESSION_A_NOREC> →    and <EXPRESSION_B> <EXPRESSION_A_NOREC>
+[40]                      →    ε  
+
+[41] <EXPRESSION_B>       →    <EXPRESSION_C> <EXPRESSION_B_NOREC> 
+[42] <EXPRESSION_B_NOREC> →    <COMP_OPERATOR> <EXPRESSION_C> <EXPRESSION_B_NOREC>
+[43]                      →    ε  
+
+[44] <EXPRESSION_C>       →    <EXPRESSION_D> <EXPRESSION_C_NOREC> 
+[45] <EXPRESSION_C_NOREC> →    <PLUS_MINUS> <EXPRESSION_D> <EXPRESSION_C_NOREC>
+[46]                      →    ε 
+
+[47] <EXPRESSION_D>       →    <EXPRESSION_E> <EXPRESSION_D_NOREC> 
+[48] <EXPRESSION_D_NOREC> →    <MULTI_DIV> <EXPRESSION_E> <EXPRESSION_D_NOREC>
+[49]                      →    ε 
+
+[50] <EXPRESSION_E>       →   not <NUMBER>
+[51]                      →   -   <NUMBER>
+[52]                      →       <NUMBER>
+[53] <NUMBER>             →   (<EXPRESSION>)
+[54]                      →   ID
+[55]                      →   INTEGER
+[56]                      →   true
+[57]                      →   false
+[58] <COMP_OPER>          →   >
+[59]                      →   <
+[60]                      →   >=
+[61]                      →   <=
+[62]                      →   =
+[63] <PLUS_MINUS>         →   +
+[64]                      →   -
+[65] <MULT_DIV>           →   *
+[66]                      →   /
+
+[67] <IF>                 →   if <EXPRESSION> then <INSTRUCTION_LIST> <IF_END>
+[68] <IF_END>             →   else <INSTRUCTION_LIST> end-if
+[69]                      →   end-if
+[70] <CALL>               →   perform ID<CALL_LF>
+[71] <CALL_LF>            →   <END_INST>     
+[72]                      →   until <EXPRESSION><END_INST>
+[73] <READ>               →   accept ID<END_INST>
+[74] <WRITE>              →   display <WRITE_LF>
+[75] <WRITE_LF>           →   STRING<END_INST>
+[76]                      →   <EXPRESSION><END_INST>
