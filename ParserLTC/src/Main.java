@@ -14,7 +14,7 @@ the given grammar. The modification is the following:
 public class Main{
 	public static void main(String args[])throws Exception{
 		
-		new Parser();
+		Parser.getInstance().Start();
 		// Apply the lexical analyzer
 		/*Scanner cobolScanner = new Scanner(System.in);
 		Symbol lexicalUnit;
