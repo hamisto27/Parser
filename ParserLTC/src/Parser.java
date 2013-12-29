@@ -36,7 +36,7 @@ public class Parser {
 		do{
 			lexicalUnit = scanner.next_token();
 			if(lexicalUnit != null){
-				//System.out.println("token: "+lexicalUnit.getValue() + " \tlexical unit: " + lexicalUnit.unit.toString());
+				System.out.println("token: "+lexicalUnit.getValue() + " \tlexical unit: " + lexicalUnit.unit.toString());
 			}
 		}while(lexicalUnit == null || !lexicalUnit.unit.equals(LexicalUnit.EOF));
 	}
