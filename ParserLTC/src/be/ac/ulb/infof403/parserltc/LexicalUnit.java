@@ -1,3 +1,4 @@
+package be.ac.ulb.infof403.parserltc;
 public enum LexicalUnit{
 	IDENTIFICATION(1),
 	DIVISION(2),

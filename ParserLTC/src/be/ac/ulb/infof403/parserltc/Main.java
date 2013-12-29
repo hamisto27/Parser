@@ -1,3 +1,4 @@
+package be.ac.ulb.infof403.parserltc;
 /**
 This class show you how to use the Lexical Analyzer.
 For this second part, I choosed to accept a file that does not respect completly
@@ -8,7 +9,8 @@ the given grammar. The modification is the following:
 public class Main{
 	public static void main(String args[])throws Exception{
 		
-		Parser.parse();
+		new Parser().parse();
+		
 		// Apply the lexical analyzer
 		/*Scanner cobolScanner = new Scanner(System.in);
 		Symbol lexicalUnit;

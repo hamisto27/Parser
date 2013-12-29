@@ -1,58 +1,58 @@
 <PROGRAM>            ->    <IDENT> <ENV> <DATA> <PROC>
-<IDENT>              ->    identification division <END_INST> program-id. ID<END_INST> author. <WORDS><END_INST> date-written. <WORDS><END_INST>
-<WORDS>              ->    ID <WORDS_NOREC> 
-<WORDS_NOREC>        ->    ID <WORDS_NOREC>
-<WORDS_NOREC>		 ->    epsilon 
+<IDENT>              ->    identification division <END_INST> program-id. <ID><END_INST> author. <WORDS><END_INST> date-written. <WORDS><END_INST>
+<WORDS>              ->    <ID> <WORDS_NOREC> 
+<WORDS_NOREC>        ->    <ID> <WORDS_NOREC>
+<WORDS_NOREC>		 ->     
 <END_INST>           ->    .\n
 <ENV>                ->    environment division<END_INST> configuration section<END_INST> source-computer. <WORDS><END_INST> object-computer. <WORDS><END_INST>
 <DATA>               ->    data division<END_INST>working-storage section<END_INST> <VAR_LIST>
 <VAR_LIST>           ->    <VAR_DECL> <VAR_LIST>
-<VAR_LIST>           ->    epsilon
-<VAR_DECL>           ->    <LEVEL> ID pic IMAGE<VAR_DECL_LF>
-<VAR_DECL_LF>        ->    value INTEGER<END_INST>     
+<VAR_LIST>           ->    
+<VAR_DECL>           ->    <LEVEL> <ID> pic <IMAGE><VAR_DECL_LF>
+<VAR_DECL_LF>        ->    value <INTEGER><END_INST>     
 <VAR_DECL_LF>        ->    <END_INST>
-<LEVEL>              ->    INTEGER
-<PROC>               ->    procedure division<END_INST> ID section<END_INST> <LABELS> end program ID.
+<LEVEL>              ->    <INTEGER>
+<PROC>               ->    procedure division<END_INST> <ID> section<END_INST> <LABELS> end program <ID>.
 <LABELS>             ->    <LABEL><END_INST> <INSTRUCTION_LIST> <LABELS_NOREC> 
 <LABELS_NOREC>       ->    <LABEL><END_INST> <INSTRUCTION_LIST> <LABELS_NOREC>
-<LABELS_NOREC>       ->    epsilon
-<LABEL>              ->     ID
+<LABELS_NOREC>       ->    
+<LABEL>              ->     <ID>
 <INSTRUCTION_LIST>   ->    <INSTRUCTION> <INSTRUCTION_LIST>
-<INSTRUCTION_LIST>   ->    epsilon
+<INSTRUCTION_LIST>   ->    
 <INSTRUCTION>        ->    <ASSIGNATION>
 <INSTRUCTION>	     ->    <IF>
 <INSTRUCTION>	     ->    <CALL>
 <INSTRUCTION>		 ->    <READ>
 <INSTRUCTION>		 ->    <WRITE>
 <INSTRUCTION>        ->    stop run<END_INST>
-<ASSIGNATION>        ->    move <EXPRESSION> to ID<END_INST>
-<ASSIGNATION>	     ->    compute ID = <EXPRESSION><END_INST>
-<ASSIGNATION>		 ->    add <EXPRESSION> to ID<END_INST>
-<ASSIGNATION>	     ->    subtract <EXPRESSION> from ID<END_INST>
+<ASSIGNATION>        ->    move <EXPRESSION> to <ID><END_INST>
+<ASSIGNATION>	     ->    compute <ID> = <EXPRESSION><END_INST>
+<ASSIGNATION>		 ->    add <EXPRESSION> to <ID><END_INST>
+<ASSIGNATION>	     ->    subtract <EXPRESSION> from <ID><END_INST>
 <ASSIGNATION>		 ->    multiply <ASSING_END><END_INST>
 <ASSIGNATION>		 ->    divide <ASSING_END><END_INST>
-<ASSING_END>	     ->    <EXPRESSION>,<EXPRESSION> giving ID
+<ASSING_END>	     ->    <EXPRESSION>,<EXPRESSION> giving <ID>
 <EXPRESSION>         ->    <EXPRESSION_A> <EXPRESSION_NOREC> 
 <EXPRESSION_NOREC>   ->    or <EXPRESSION_A> <EXPRESSION_NOREC>
-<EXPRESSION_NOREC>   ->    epsilon  
+<EXPRESSION_NOREC>   ->      
 <EXPRESSION_A>       ->    <EXPRESSION_B> <EXPRESSION_A_NOREC> 
 <EXPRESSION_A_NOREC> ->    and <EXPRESSION_B> <EXPRESSION_A_NOREC>
-<EXPRESSION_A_NOREC> ->    epsilon  
+<EXPRESSION_A_NOREC> ->      
 <EXPRESSION_B>       ->    <EXPRESSION_C> <EXPRESSION_B_NOREC> 
-<EXPRESSION_B_NOREC> ->    <COMP_OPERATOR> <EXPRESSION_C> <EXPRESSION_B_NOREC>
-<EXPRESSION_B_NOREC> ->    epsilon 
+<EXPRESSION_B_NOREC> ->    <COMP_OPER> <EXPRESSION_C> <EXPRESSION_B_NOREC>
+<EXPRESSION_B_NOREC> ->     
 <EXPRESSION_C>       ->    <EXPRESSION_D> <EXPRESSION_C_NOREC> 
 <EXPRESSION_C_NOREC> ->    <PLUS_MINUS> <EXPRESSION_D> <EXPRESSION_C_NOREC>
-<EXPRESSION_C_NOREC> ->    epsilon 
+<EXPRESSION_C_NOREC> ->     
 <EXPRESSION_D>       ->    <EXPRESSION_E> <EXPRESSION_D_NOREC> 
-<EXPRESSION_D_NOREC> ->    <MULTI_DIV> <EXPRESSION_E> <EXPRESSION_D_NOREC>
-<EXPRESSION_D_NOREC> ->    epsilon 
+<EXPRESSION_D_NOREC> ->    <MULT_DIV> <EXPRESSION_E> <EXPRESSION_D_NOREC>
+<EXPRESSION_D_NOREC> ->     
 <EXPRESSION_E>       ->    not <NUMBER>
 <EXPRESSION_E>       ->    -   <NUMBER>
 <EXPRESSION_E>       ->        <NUMBER>
 <NUMBER>             ->    (<EXPRESSION>)
-<NUMBER>             ->    ID
-<NUMBER>             ->    INTEGER
+<NUMBER>             ->    <ID>
+<NUMBER>             ->    <INTEGER>
 <NUMBER>             ->    true
 <NUMBER>             ->    false
 <COMP_OPER>          ->    >
@@ -67,10 +67,10 @@
 <IF>                 ->    if <EXPRESSION> then <INSTRUCTION_LIST> <IF_END>
 <IF_END>             ->    else <INSTRUCTION_LIST> end-if
 <IF_END>             ->    end-if
-<CALL>               ->    perform ID<CALL_LF>
+<CALL>               ->    perform <ID><CALL_LF>
 <CALL_LF>            ->    <END_INST>     
 <CALL_LF>            ->    until <EXPRESSION><END_INST>
-<READ>               ->    accept ID<END_INST>
+<READ>               ->    accept <ID><END_INST>
 <WRITE>              ->    display <WRITE_LF>
 <WRITE_LF>           ->    STRING<END_INST>
 <WRITE_LF>           ->    <EXPRESSION><END_INST>
