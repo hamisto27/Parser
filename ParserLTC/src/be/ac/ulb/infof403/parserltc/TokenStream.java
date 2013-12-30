@@ -4,8 +4,8 @@ import java.io.IOException;
 
 public interface TokenStream {
 	
-	public Object poll() throws IOException;
+	public Symbol<?> poll() throws IOException;
 	
-	public Object peek() throws IOException;
+	public Symbol<?> peek() throws IOException;
 
 }

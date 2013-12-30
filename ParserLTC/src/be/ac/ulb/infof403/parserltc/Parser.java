@@ -36,7 +36,14 @@ public class Parser {
 		public TokenTypeRule(LexicalUnit tokenType) {
 			this.tokenType = tokenType;
 		}
-
+		
+		public void match1(TokenStreamImpl tokenStreamImpl) throws MatchException, IOException {
+			if (!tokenStreamImpl.peek().getUnitType().equals(tokenType)) {
+				throw new MatchException();
+			}
+			tokenStreamImpl.poll();
+		}
+		
 		@Override
 		public void match(Queue<Symbol> tokens) throws MatchException {
 			if (!tokens.peek().getUnitType().equals(tokenType)) {
@@ -104,6 +111,7 @@ public class Parser {
 			rules = new ArrayList<Rule>();
 		}
 
+		// It means that function can receive multiple rules arguments.
 		public MultiRule(Rule... rules) {
 			this();
 			for (Rule r : rules) {
@@ -179,6 +187,8 @@ public class Parser {
 	private HashMap<String, RuleProxy> rules;
 
 	private Scanner scanner;
+	
+	private TokenStreamImpl tokenStreamImpl;
 
 	private Map<String, Symbol<?>> tableOfSymbols;
 
@@ -189,7 +199,7 @@ public class Parser {
 	private static final int PATTERN = 1;
 
 	private static final Pattern TOKEN_PATTERN = Pattern
-			.compile("(<?[\\w-\\\\]+>?|\\.|[<>]=?|[\\+*/=)(])");
+			.compile("(<?[\\w-\\\\]+>?|\\.|[<>]=?|[\\+*/=,)(])");
 
 	private static final String ROLE_TOKEN_PREFIX = "<";
 	private static final String ROLE_TOKEN_SUFFIX = ">";
@@ -205,20 +215,28 @@ public class Parser {
 		
 		this.scanner = new Scanner(scannerStream);
 		this.tableOfSymbols = scanner.getTableOfSymbols();
-		Symbol<?> lexicalUnit;
+		//delegate class
+		this.tokenStreamImpl = new TokenStreamImpl(scanner);
+		
+		for(String key : this.rules.keySet()){
+			RuleProxy rule = rules.get(key);
+			System.out.println("rule-name: " + rule.getName() + "   rule-key: " + key);
+		}
+		/*Symbol<?> lexicalUnit;
 		do {
-			lexicalUnit = scanner.next_token();
+			lexicalUnit = tokenStreamImpl.poll();
 			if (lexicalUnit != null) {
-				System.out.println("token: " + lexicalUnit.getValue()
-						+ " \tlexical unit: " + lexicalUnit.getUnitType());
+				//System.out.println("token: " + lexicalUnit.getValue()
+					//	+ " \tlexical unit: " + lexicalUnit.getUnitType());
 			}
 		} while (lexicalUnit == null
-				|| !lexicalUnit.getUnitType().equals(LexicalUnit.EOF));
+				|| !lexicalUnit.getUnitType().equals(LexicalUnit.EOF));*/
 	}
 
 	private void loadRules(BufferedReader reader) {
 
-		rules = new HashMap<String, Parser.RuleProxy>();
+		//changed hashmap to linkedhashmap.
+		rules = new LinkedHashMap<String, Parser.RuleProxy>();
 		// load built in rules
 		addRule("<INTEGER>", new TokenTypeRule(LexicalUnit.INTEGER));
 		addRule("<ID>", new TokenTypeRule(LexicalUnit.IDENTIFIER));
@@ -230,16 +248,21 @@ public class Parser {
 			while ((line = reader.readLine()) != null) {
 				// process the line.
 				String[] splitted = line.split("->");
-				assert splitted.length == 2;
+				
+				//assert boolean_expression : string_expression;
+				//assert splitted.length == 2;
 
 				splitted[NAME] = sanitizeRuleName(splitted[NAME]);
 				splitted[PATTERN] = sanitizePatternString(splitted[PATTERN]);
 				Matcher m = TOKEN_PATTERN.matcher(splitted[PATTERN]);
 				LinkedList<String> patternTokens = new LinkedList<String>();
 
+				//System.out.println("*************___________***************");
 				while (m.find()) {
+					//System.out.println(m.group());
 					patternTokens.add(m.group());
 				}
+				
 
 				if (patternTokens.size() > 1) {
 					// this is a pattern
@@ -249,23 +272,27 @@ public class Parser {
 					int i = 0;
 					for (String token : patternTokens) {
 						patternRules[i] = getOrcreateTokenRule(token);
-						assert patternRules[i] != null;
+						//assert patternRules[i] != null;
 					}
 					addRule(sanitizeRuleName(splitted[NAME]), new PatternRule(
 							patternRules));
+					//System.out.println("rule-name: " + splitted[NAME]);
 				} else {
+					//System.out.println("rule-name-empty: " + splitted[NAME]);
 					addRule(splitted[NAME],
 							getOrcreateTokenRule(splitted[PATTERN]));
 				}
-
 			}
-
 			// ho finito l'analisi del file, controllo che tutti i proxy
 			// siano inizializzati
 			for (RuleProxy p : this.rules.values()) {
 				if (p.getTarget() == null) {
 					throw new RuntimeException("Impossibile trovare la regola "
 							+ p.getName());
+				}
+				else{
+					/////
+
 				}
 			}
 		} catch (IOException e) {
@@ -275,6 +302,7 @@ public class Parser {
 	}
 
 	private String sanitizePatternString(String string) {
+		//matches one or many whitespaces
 		return string.trim().replaceAll("\\s+", " ");
 	}
 
@@ -305,7 +333,7 @@ public class Parser {
 	}
 
 	private RuleProxy addRule(String ruleName, Rule rule) {
-		System.out.println("addRule(" + ruleName + " -> " + rule + ")");
+	//	System.out.println("addRule(" + ruleName + " -> " + rule + ")");
 		RuleProxy proxy = this.rules.get(ruleName);
 		if (proxy == null) {
 			proxy = new RuleProxy(ruleName);
