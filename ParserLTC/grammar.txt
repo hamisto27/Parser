@@ -1,14 +1,14 @@
 <PROGRAM>            ->    <IDENT> <ENV> <DATA> <PROC>
-<IDENT>              ->    identification division <END_INST> program-id. <ID><END_INST> author. <WORDS><END_INST> date-written. <WORDS><END_INST>
+<IDENT>              ->    identification division <END_INST> program-id. <ID> <END_INST> author. <WORDS><END_INST> date-written. <WORDS><END_INST>
 <WORDS>              ->    <ID> <WORDS_NOREC> 
-<WORDS_NOREC>        ->    <ID> <WORDS_NOREC>
-<WORDS_NOREC>		 ->     
+<WORDS_NOREC>		 ->    <ID> <WORDS_NOREC>
+<WORDS_NOREC>        ->    
 <END_INST>           ->    .\n
 <ENV>                ->    environment division<END_INST> configuration section<END_INST> source-computer. <WORDS><END_INST> object-computer. <WORDS><END_INST>
 <DATA>               ->    data division<END_INST>working-storage section<END_INST> <VAR_LIST>
 <VAR_LIST>           ->    <VAR_DECL> <VAR_LIST>
-<VAR_LIST>           ->    
-<VAR_DECL>           ->    <LEVEL> <ID> pic <IMAGE><VAR_DECL_LF>
+<VAR_LIST>           ->   
+<VAR_DECL>           ->    <LEVEL> <ID> <IMAGE><VAR_DECL_LF>
 <VAR_DECL_LF>        ->    value <INTEGER><END_INST>     
 <VAR_DECL_LF>        ->    <END_INST>
 <LEVEL>              ->    <INTEGER>
